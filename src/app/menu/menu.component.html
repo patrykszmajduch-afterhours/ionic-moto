@@ -1,0 +1,50 @@
+
+  <ion-menu menuId="main-content" type="overlay">
+    <ion-content>
+      <ion-list id="inbox-list">
+        <ion-list-header>OTO-MOTO</ion-list-header>
+        <ion-note>{{currentUser.mail}}</ion-note>
+
+        <ion-menu-toggle auto-hide="true" *ngFor="let p of appPages; let i = index">
+          <ion-item *ngIf="p.isAuth !== false" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" >
+            <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+            <ion-label>{{ p.title }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+      <ion-list id="user-list">
+        <ion-menu-toggle auto-hide="false" *ngFor="let p of userMenu; let i = index">
+          <ion-item *ngIf="p.isAuth !== false" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
+            <ion-icon slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+            <ion-label>{{ p.title }}</ion-label>
+          </ion-item>
+        </ion-menu-toggle>
+      </ion-list>
+<!-- 
+      <ion-list id="labels-list">
+        <ion-list-header>Labels</ion-list-header> -->
+
+        <!-- <ion-item *ngFor="let label of labels" lines="none">
+          <ion-icon slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
+          <ion-label>{{ label }}</ion-label>
+        </ion-item> -->
+      <!-- </ion-list> -->
+    </ion-content>
+  </ion-menu>
+  <ion-menu side="end" menuId="main">
+    <ion-header>
+      <ion-toolbar color="primary">
+        <ion-title>Start Menu</ion-title>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+      <ion-list>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+        <ion-item>Menu Item</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+  <ion-router-outlet main ></ion-router-outlet>

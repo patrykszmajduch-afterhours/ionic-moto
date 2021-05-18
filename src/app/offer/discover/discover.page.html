@@ -1,0 +1,95 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <!-- moze zmienic na tooglebutton tam jest jakoś inaczej menuId -->
+      <ion-menu-button></ion-menu-button> 
+    </ion-buttons>
+    <ion-title>Discover offer! Brum Brum</ion-title>
+<!-- ustawic pojawienie od zalogowania -->
+    <ion-menu-button  *ngIf="true" slot="end" menu="main">
+      <ion-icon name="person-circle-outline"></ion-icon>
+    </ion-menu-button>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+        <custom-search></custom-search>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-button (click)="onClick()"> send</ion-button>
+
+      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{carsList[0].advertisementId}}</ion-card-title>
+            <ion-card-subtitle>{{carsList[0].price|currency:"PLN":"symbol"}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-img [src]="carsList[0].photo"></ion-img>
+          <ion-card-content>
+            <p>{{ carsList[0].description}}</p>
+          </ion-card-content>
+          <div text-right>
+            <!-- <ion-button class="ion-float-right" fill="clear" color="primary" [routerLink]="[
+            '/',
+            'main',
+            'discover',
+            carsList[0].id
+            ]">
+              show more
+            </ion-button> -->
+            <ion-button (click)="presentModal()">test me</ion-button>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <!-- <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{carsList[0].advertisementId}}</ion-card-title>
+            <ion-card-subtitle>{{carsList[0].price|currency:"PLN":"symbol"}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-img [src]="carsList[0].photo"></ion-img>
+          <ion-card-content>
+            <p>{{ carsList[0].description}}</p>
+          </ion-card-content>
+          <div text-right>
+            <ion-button class="ion-float-right" fill="clear" color="primary" [routerLink]="[
+            '/',
+            'home',
+            'discover',
+            carsList[0].id
+            ]">
+             show more
+              </ion-button>
+          </div>
+        </ion-card>
+      </ion-col>
+    </ion-row> -->
+    <ion-row>
+      <ion-col size="12" size-sm="8" offset-sm="2" text-center>
+        <ion-list>
+          <ion-item *ngFor="let car of carsList.slice(1)">
+            <ion-thumbnail slot="start">
+              <ion-img [src]="car.photo">
+              </ion-img>
+            </ion-thumbnail>
+            <ion-label>
+              <h2>
+                {{car.advertisementId}}
+              </h2>
+              <p>
+                {{car.address}}
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
