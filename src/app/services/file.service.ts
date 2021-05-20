@@ -8,26 +8,23 @@ import { finalize } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class FileService {
-  private basePath = '/offers';
+  private basePath = '/file';
 
-  constructor(private db: AngularFireDatabase, private storage: AngularFireStorage) { }
+  constructor(private db: AngularFireDatabase, private storage: AngularFireStorage,) { }
 
-  pushFileToStorage(fileUpload: FileUpload): Observable<number> {
+  async pushFileToStorage(fileUpload: FileUpload): Promise<any> {
     const filePath = `${this.basePath}/${fileUpload.file.name}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, fileUpload.file);
 
-    uploadTask.snapshotChanges().pipe(
-      finalize(() => {
-        storageRef.getDownloadURL().subscribe(downloadURL => {
+    return await uploadTask.snapshotChanges().toPromise().finally(async () => {
+       return await storageRef.getDownloadURL().toPromise().then(downloadURL => {
           fileUpload.url = downloadURL;
           fileUpload.name = fileUpload.file.name;
           this.saveFileData(fileUpload);
         });
       })
-    ).subscribe();
-
-    return uploadTask.percentageChanges();
+    ;
   }
 
   private saveFileData(fileUpload: FileUpload): void {

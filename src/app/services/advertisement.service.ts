@@ -11,7 +11,7 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
   providedIn: 'root'
 })
 export class AdvertisementService {
-  private dbPath = '/tutorials';
+  private dbPath = '/offers';
 
   advRef: AngularFireList<AdvertisementDTO> = null;
 

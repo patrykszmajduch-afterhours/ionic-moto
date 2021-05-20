@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AdvertisementDTO } from 'src/app/dto/advertisement-dto';
+import { AdvertisementService } from 'src/app/services/advertisement.service';
 import { FileService, FileUpload } from 'src/app/services/file.service';
 
 @Component({
@@ -8,44 +10,52 @@ import { FileService, FileUpload } from 'src/app/services/file.service';
 })
 export class FavoritesPage implements OnInit {
 
-  selectedFiles: FileList;
-  currentFileUpload: FileUpload;
+  selectedFiles = new Array();
   imageToDisplay = new Array();
   percentage: number;
-  imgURL:any;
+  imgURL: any;
+  offer: AdvertisementDTO = {} as AdvertisementDTO;
 
-  constructor(private uploadService: FileService) { }
+  constructor(private uploadService: FileService, private advService: AdvertisementService) { }
 
   ngOnInit(): void {
   }
 
-  selectFile(event): void {
-    this.selectedFiles = event.target.files;
-    console.log(this.selectedFiles);
-    var reader = new FileReader();
-    reader.readAsDataURL(this.selectedFiles[0]); 
-    reader.onload = (_event) => { 
-      console.log(typeof this.imageToDisplay)
+  onSubmit(offer) {
+    offer.key = "";
+    console.log(offer);
+    var key = this.advService.create(offer);
+    this.offer = offer;
+    this.offer.key = key.key;
+    this.offer.photo = new Array();
+    this.upload();
+  }
 
-      this.imageToDisplay.push(reader.result); 
-      console.log(this.imageToDisplay);
-      console.log(typeof reader.result)
+  selectFile(event): void {
+    this.selectedFiles.push(event.target.files);
+    var reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (_event) => {
+      this.imageToDisplay.push(reader.result);
     }
   }
 
   upload(): void {
-    const file = this.selectedFiles.item(0);
-    this.selectedFiles = undefined;
+    let numberOf = 0;
+    this.selectedFiles.forEach(async (element) => {
+      const file = element.item(0);
+      var currentFileUpload = new FileUpload(file);
+      let test = await this.uploadService.pushFileToStorage(currentFileUpload);
 
-    this.currentFileUpload = new FileUpload(file);
-    this.uploadService.pushFileToStorage(this.currentFileUpload).subscribe(
-      percentage => {
-        this.percentage = Math.round(percentage);
-      },
-      error => {
-        console.log(error);
-      }
-    );
+      console.log("Plik url", currentFileUpload);
+      console.log("udalo sie nanana!");
+      console.log(currentFileUpload);
+      this.offer.photo.push(currentFileUpload.url);
+      numberOf++
+      if (numberOf == this.selectedFiles.length)
+        this.advService.update(this.offer.key, this.offer);
+
+    });
   }
 
 }

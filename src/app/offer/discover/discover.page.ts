@@ -28,20 +28,6 @@ export class DiscoverPage implements OnInit {
 
   test:AdvertisementDTO ;
   ngOnInit() {
-    this.veh={
-      vehicleType:"cabrio",
-      id:"1"
-    }
-  
-    this.test ={
-      advertisementId: "1",
-      announcementDate: "2020-01-03",
-      status: true,
-      voivodeship: "SLASKIE",
-      vehicle: this.veh,
-      userId: "pszmajduch",
-      photo:"firebasestorage.googleapis.com/v0/b/otomoto-21f01.appspot.com/o/audi.jpg?alt=media"
-    }
     // this.carService.getAll().subscribe((data: {}) => {
     //   this.carsList = data as Array<AdvertisementDTO>;
     //   console.log("its working!");
