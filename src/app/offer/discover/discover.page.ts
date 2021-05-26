@@ -16,16 +16,16 @@ export class DiscoverPage implements OnInit {
 
   carsList: AdvertisementDTO[];
   constructor(private carService: AdvertisementService, public modalController: ModalController) { }
-
+  modal:any;
   async presentModal(offerToShow) {
-    const modal = await this.modalController.create({
+    this.modal = await this.modalController.create({
       component: DetailsComponent,
       componentProps: {
         offer: offerToShow
       }
     });
 
-    return await modal.present();
+    return await this.modal.present();
   }
   
   
@@ -52,5 +52,11 @@ export class DiscoverPage implements OnInit {
   }
   show(event) {
     this.carsList = event;
+  }
+
+  dismissModal() {
+    if (this.modal) {
+      this.modal.dismiss().then(() => { this.modal = null; });
+    }
   }
 }

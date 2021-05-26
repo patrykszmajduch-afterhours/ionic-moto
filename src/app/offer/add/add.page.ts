@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { FileService, FileUpload } from 'src/app/services/file.service';
 import { AdvertisementDTO } from 'src/app/dto/advertisement-dto';
 import { AdvertisementService } from 'src/app/services/advertisement.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-add',
@@ -21,13 +22,15 @@ export class AddPage implements OnInit {
   imgURL: any;
   offer: AdvertisementDTO = {} as AdvertisementDTO;
 
-  constructor(private uploadService: FileService, private advService: AdvertisementService) { }
+  constructor(private uploadService: FileService, private advService: AdvertisementService,private auth:AuthService) { }
 
   ngOnInit(): void {
+    console.log("user id dodawanie",this.auth.user.uid);
   }
 
   onSubmit(offer) {
     offer.key = "";
+    offer.userId = this.auth.user.id;
     console.log(offer);
     var key = this.advService.create(offer);
     this.offer = offer;

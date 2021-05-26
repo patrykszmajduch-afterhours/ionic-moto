@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserInfo } from './user-info';
 import { AngularFireAuth } from "@angular/fire/auth";
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 // import { User } from 'firebase';
 // import { User } from 'firebase';
 @Injectable({
@@ -11,26 +10,40 @@ import { first } from 'rxjs/operators';
 })
 export class AuthService {
   private _userIsAuthenticated = false;
-  public ccUser:any;
+  public ccUser: any;
   // private _currentUser: UserInfo = JSON.parse('{ "mail": "test@gmail.com", "userName": "test user name", "userId":"uuid losowe"}');
   readonly authState$: Observable<any | null> = this.fireAuth.authState;
-
   // 
   // = new Observable.bind()
   get userIsAuthenticated() {
-    return this._userIsAuthenticated;
+   return this.authState$.pipe(map(state => {
+      if (state !== null)
+       { this.fireAuth.currentUser.then(el=>this.ccUser=el);
+         return true; }
+         this.ccUser=null;
+      return false;
+    }));
   }
+  
+  constructor(private http: HttpClient, private fireAuth: AngularFireAuth) { this.fireAuth.onAuthStateChanged(user => {
+    if (user) {
+      this.ccUser=user;
+    }
+    else {
+      this.ccUser={};
+    }
+})}
 
-  constructor(private http: HttpClient, private fireAuth: AngularFireAuth) { }
-
-  get currentUser(){
+  get currentUser() {
     return this.fireAuth.currentUser;
   }
-
-  async isLoggIn():Promise<any>{
+ 
+  async isLoggIn(): Promise<any> {
     return await this.fireAuth.authState.pipe(first()).toPromise();
   }
-
+  get user(){
+    return this.ccUser;
+  }
 
 
   // login() {
@@ -53,13 +66,7 @@ export class AuthService {
     return this.fireAuth.currentUser;
   }
 
-
-
-  get user(): any | null {
-    return this.fireAuth.currentUser;
-  }
-
-  login({ email, password }: Credentials): Promise<any>{
+  login({ email, password }: Credentials): Promise<any> {
     return this.fireAuth.signInWithEmailAndPassword(email, password);
   }
 

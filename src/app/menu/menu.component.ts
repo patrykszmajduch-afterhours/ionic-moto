@@ -16,7 +16,7 @@ export class MenuComponent implements OnInit {
     // { title: 'Discover', url: '/folder/Favorites', icon: 'heart' },
     { title: 'Archived', url: '/folder/Archived', icon: 'archive' },
     // { title: 'Messages', url: '/user/Trash', icon: 'mail' },
-    { title: 'Logout', url: '/log', icon: 'log-out', isAuth : !this.auth.userIsAuthenticated },
+    // { title: 'Logout', url: '/log', icon: 'log-out', isAuth : this.auth.userIsAuthenticated },
     { title: 'Login', url: '/auth', icon: 'log-in', isAuth : !this.auth.userIsAuthenticated },
     // { title: 'Join!', url: '/auth', icon: 'log-in', isAuth : !this.auth.userIsAuthenticated },
   ];
@@ -37,7 +37,10 @@ export class MenuComponent implements OnInit {
   //   this.currentUser=obs;
   // this.auth.getUserInfo.then(el=>this.currentUser=el);
   }
-  
+  logOut(){
+    this.auth.logout();
+    this.router.navigate(['/']);
+  }
   // goToAdd() {
   //   this.router.navigate(['/main/tabs/discover/add']);
   // }

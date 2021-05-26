@@ -40,7 +40,7 @@
                     <mat-label>Number</mat-label>
                     <input type="text" placeholder="Pick one" aria-label="Number" matInput [matAutocomplete]="auto" [(ngModel)]='criteria.brand' name ="test">
                     <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
-                        <mat-option *ngFor="let option of test" [value]="option" >
+                        <mat-option *ngFor="let option of brandsList" [value]="option" >
                             {{option}}
                         </mat-option>
                     </mat-autocomplete>

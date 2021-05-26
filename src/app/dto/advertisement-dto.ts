@@ -10,9 +10,8 @@ export interface AdvertisementDTO {
     status: boolean;
     voivodeship: string;
     vehicle: VehicleInformationDto;
-    userId: number;
+    userId: string;
     photo:Array<string>;
-    
 }
 
 export interface FollowingAdvertisementDTO {
