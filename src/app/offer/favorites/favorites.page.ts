@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastController } from '@ionic/angular';
 import { AdvertisementDTO } from 'src/app/dto/advertisement-dto';
 import { AdvertisementService } from 'src/app/services/advertisement.service';
 import { FileService, FileUpload } from 'src/app/services/file.service';
@@ -45,17 +46,15 @@ export class FavoritesPage implements OnInit {
     this.selectedFiles.forEach(async (element) => {
       const file = element.item(0);
       var currentFileUpload = new FileUpload(file);
-      let test = await this.uploadService.pushFileToStorage(currentFileUpload);
+      let test = await this.uploadService.pushFileToStorage(this.offer.key, currentFileUpload);
 
       console.log("Plik url", currentFileUpload);
       console.log("udalo sie nanana!");
       console.log(currentFileUpload);
       this.offer.photo.push(currentFileUpload.url);
-      numberOf++
+      numberOf++;
       if (numberOf == this.selectedFiles.length)
         this.advService.update(this.offer.key, this.offer);
-
     });
   }
-
 }

@@ -12,34 +12,34 @@ export class FileService {
 
   constructor(private db: AngularFireDatabase, private storage: AngularFireStorage,) { }
 
-  async pushFileToStorage(fileUpload: FileUpload): Promise<any> {
-    const filePath = `${this.basePath}/${fileUpload.file.name}`;
+  async pushFileToStorage(prefix: string, fileUpload: FileUpload): Promise<any> {
+    const filePath = '/' + prefix + `${this.basePath}/${fileUpload.file.name}`;
     const storageRef = this.storage.ref(filePath);
     const uploadTask = this.storage.upload(filePath, fileUpload.file);
 
     return await uploadTask.snapshotChanges().toPromise().finally(async () => {
-       return await storageRef.getDownloadURL().toPromise().then(downloadURL => {
-          fileUpload.url = downloadURL;
-          fileUpload.name = fileUpload.file.name;
-          this.saveFileData(fileUpload);
-        });
-      })
-    ;
+      return await storageRef.getDownloadURL().toPromise().then(downloadURL => {
+        fileUpload.url = downloadURL;
+        fileUpload.name = fileUpload.file.name;
+        this.saveFileData(prefix, fileUpload);
+      });
+    })
+      ;
   }
 
-  private saveFileData(fileUpload: FileUpload): void {
+  private saveFileData(prefix: string, fileUpload: FileUpload): void {
     this.db.list(this.basePath).push(fileUpload);
   }
 
-  getFiles(numberItems): AngularFireList<FileUpload> {
-    return this.db.list(this.basePath, ref =>
+  getFiles(prefix: string, numberItems): AngularFireList<FileUpload> {
+    return this.db.list('/' + prefix + this.basePath, ref =>
       ref.limitToLast(numberItems));
   }
 
-  deleteFile(fileUpload: FileUpload): void {
+  deleteFile(prefix: string, fileUpload: FileUpload): void {
     this.deleteFileDatabase(fileUpload.key)
       .then(() => {
-        this.deleteFileStorage(fileUpload.name);
+        this.deleteFileStorage(prefix, fileUpload.name);
       })
       .catch(error => console.log(error));
   }
@@ -48,8 +48,8 @@ export class FileService {
     return this.db.list(this.basePath).remove(key);
   }
 
-  private deleteFileStorage(name: string): void {
-    const storageRef = this.storage.ref(this.basePath);
+  private deleteFileStorage(prefix: string, name: string): void {
+    const storageRef = this.storage.ref('/' + prefix + this.basePath);
     storageRef.child(name).delete();
   }
 }

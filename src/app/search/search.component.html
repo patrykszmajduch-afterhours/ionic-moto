@@ -1,6 +1,50 @@
 <form #myForm="ngForm">
-<label for="brand">Brand</label>
-<input type="text" id="name"/>
-<label for="cat">Category </label>
-<input type="text" id="cat" />
+    <ion-list-header>
+        <ion-label>Search</ion-label>
+    </ion-list-header>
+    <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-card>
+                    <ion-label for="brand">Brand</ion-label>
+                    <input type="text" id="name" [(ngModel)]='criteria.brand' name="brand" />
+                </ion-card>
+            </ion-col>
+            <ion-col>
+                <label for="cat">Category </label>
+                <input type="text" id="cat" [(ngModel)]='criteria.category' name="category" />
+            </ion-col>
+            <ion-col>
+                <!-- <mat-form-field class="example-full-width">
+                    <mat-label>Number</mat-label>
+                    <input type="text"
+                           placeholder="Pick one"
+                           aria-label="Number"
+                           matInput
+                           [matAutocomplete]="auto">
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option *ngFor="let option of test | async" [value]="option">
+                        {{option}}
+                      </mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field> -->
+                <!-- <ion-label>material</ion-label>
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of test" [value]="option">
+                        {{option}}
+                    </mat-option>
+                </mat-autocomplete>
+                <input type="text" placeholder="Pick one" aria-label="Number" matInput  [matAutocomplete]="auto">
+                -->
+                
+                    <mat-label>Number</mat-label>
+                    <input type="text" placeholder="Pick one" aria-label="Number" matInput [matAutocomplete]="auto" [(ngModel)]='criteria.brand' name ="test">
+                    <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                        <mat-option *ngFor="let option of test" [value]="option" >
+                            {{option}}
+                        </mat-option>
+                    </mat-autocomplete>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
 </form>

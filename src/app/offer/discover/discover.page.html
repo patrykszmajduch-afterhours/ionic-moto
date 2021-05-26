@@ -13,36 +13,31 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content style="margin-bottom: 100px;">
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" class="ion-text-center">
-        <custom-search></custom-search>
+        <ion-card>
+          <custom-search (offers)="show($event)"></custom-search>
+        </ion-card>
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-button (click)="onClick()"> send</ion-button>
-
+      <!-- <ion-button (click)="onClick()"> send</ion-button> -->
       <ion-col size="12" size-sm="8" offset-sm="2" text-center>
-        <ion-card>
+        <ion-card *ngIf="carsList!==undefined && carsList.length>0">
           <ion-card-header>
-            <ion-card-title>{{carsList[0].advertisementId}}</ion-card-title>
+            <ion-card-title>{{carsList[0].title}}</ion-card-title>
             <ion-card-subtitle>{{carsList[0].price|currency:"PLN":"symbol"}}</ion-card-subtitle>
           </ion-card-header>
           <ion-img [src]="carsList[0].photo"></ion-img>
           <ion-card-content>
             <p>{{ carsList[0].description}}</p>
           </ion-card-content>
-          <div text-right>
-            <!-- <ion-button class="ion-float-right" fill="clear" color="primary" [routerLink]="[
-            '/',
-            'main',
-            'discover',
-            carsList[0].id
-            ]">
+          <div>
+            <ion-button class="ion-float-right" fill="clear" color="primary" (click)="presentModal(carsList[0])" >
               show more
-            </ion-button> -->
-            <ion-button (click)="presentModal()">test me</ion-button>
+            </ion-button>
           </div>
         </ion-card>
       </ion-col>
@@ -73,18 +68,18 @@
     </ion-row> -->
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" text-center>
-        <ion-list>
-          <ion-item *ngFor="let car of carsList.slice(1)">
+        <ion-list *ngIf="carsList!==undefined && carsList.length>0">
+          <ion-item *ngFor="let car of carsList.slice(1)" (click)="presentModal">
             <ion-thumbnail slot="start">
-              <ion-img [src]="car.photo">
+              <ion-img [src]="car.photo[0]">
               </ion-img>
             </ion-thumbnail>
             <ion-label>
               <h2>
-                {{car.advertisementId}}
+                {{car.title}}
               </h2>
               <p>
-                {{car.address}}
+                {{car.price}}
               </p>
             </ion-label>
           </ion-item>

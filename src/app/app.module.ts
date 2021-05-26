@@ -17,15 +17,24 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 import { environment } from 'src/environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { SearchComponent } from './search/search.component';
 
 @NgModule({
   declarations: [AppComponent, MenuComponent],
   entryComponents: [],
-  imports: [BrowserModule, ReactiveFormsModule,FormsModule,IonicModule.forRoot(), AppRoutingModule, HttpClientModule,
-    AngularFireModule.initializeApp(environment.firebase,"dev-test-pszmajduch"),
+  imports: [BrowserModule,
+    ReactiveFormsModule, FormsModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,
+    AngularFireModule.initializeApp(environment.firebase, "dev-test-pszmajduch"),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    AngularFireStorageModule],
+    AngularFireStorageModule,
+    BrowserAnimationsModule,
+    MatAutocompleteModule,
+    MatFormFieldModule 
+  ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     // { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true} 
   ],

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AdvertisementDTO } from 'src/app/dto/advertisement-dto';
 
 @Component({
   selector: 'app-details',
@@ -6,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./details.component.scss'],
 })
 export class DetailsComponent implements OnInit {
+  offer:AdvertisementDTO;
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(`${this.offer}`);
+  }
 
 }

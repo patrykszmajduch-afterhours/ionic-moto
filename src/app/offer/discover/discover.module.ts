@@ -8,16 +8,18 @@ import { DiscoverPageRoutingModule } from './discover-routing.module';
 
 import { DiscoverPage } from './discover.page';
 import { SearchComponent } from 'src/app/search/search.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    DiscoverPageRoutingModule
+    DiscoverPageRoutingModule,
+    MatAutocompleteModule,
+    MatFormFieldModule 
   ],
-    
-    declarations: [DiscoverPage, 
-      SearchComponent]
+  declarations: [DiscoverPage, SearchComponent]
 })
-export class DiscoverPageModule {}
+export class DiscoverPageModule { }

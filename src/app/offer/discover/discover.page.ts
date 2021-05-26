@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
 import { AdvertisementDTO } from 'src/app/dto/advertisement-dto';
@@ -14,41 +15,42 @@ import { DetailsComponent } from '../details/details.component';
 export class DiscoverPage implements OnInit {
 
   carsList: AdvertisementDTO[];
-  constructor(private carService:AdvertisementService,public modalController: ModalController) { }
-  veh:VehicleInformationDto;
+  constructor(private carService: AdvertisementService, public modalController: ModalController) { }
 
-
-  async presentModal() {
+  async presentModal(offerToShow) {
     const modal = await this.modalController.create({
       component: DetailsComponent,
-      cssClass: 'my-custom-class'
+      componentProps: {
+        offer: offerToShow
+      }
     });
+
     return await modal.present();
   }
+  
+  
 
-  test:AdvertisementDTO ;
   ngOnInit() {
     // this.carService.getAll().subscribe((data: {}) => {
     //   this.carsList = data as Array<AdvertisementDTO>;
     //   console.log("its working!");
     //   console.log(data);
     // })
-     this.carService.getAll().snapshotChanges().pipe(
-      map(changes =>
-        changes.map(c =>
-          ({ key: c.payload.key, ...c.payload.val() })
-        )
-      )
-    ).subscribe(data => {
-      this.carsList = data;
-      console.log(data)
-    });
-  }
-  
-  onClick(){
-    this.carService.create(this.test);
+    // this.carService.getAll().snapshotChanges().pipe(
+    //   map(changes =>
+    //     changes.map(c =>
+    //       ({ key: c.payload.key, ...c.payload.val() })
+    //     )
+    //   )
+    // ).subscribe(data => {
+    //   this.carsList = data;
+    //   console.log(data)
+    // });
   }
 
- 
-  
+  onClick() {
+  }
+  show(event) {
+    this.carsList = event;
+  }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { UserInfo } from '../auth/user-info';
 
@@ -28,7 +29,7 @@ export class MenuComponent implements OnInit {
   ]
   // public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
-  constructor(private auth:AuthService) { }
+  constructor(private auth:AuthService, private router:Router) { }
 
   ngOnInit() {//zmienic na observable
     // this.auth.getUserInfo.subscribe(obs=>{console.log("test");
@@ -36,5 +37,7 @@ export class MenuComponent implements OnInit {
   // });
   this.currentUser = this.auth.getUserInfo;
   }
-
+  goToAdd() {
+    this.router.navigate(['/main/tabs/discover/add']);
+  }
 }
