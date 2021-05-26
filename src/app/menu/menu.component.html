@@ -2,7 +2,7 @@
   <ion-content>
     <ion-list id="inbox-list">
       <ion-list-header>OTO-MOTO</ion-list-header>
-      <ion-note>{{currentUser.mail}}</ion-note>
+      <ion-note >{{currentUser.mail}}</ion-note>
 
       <ion-menu-toggle auto-hide="true" *ngFor="let p of appPages; let i = index">
         <ion-item *ngIf="p.isAuth !== false" routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false">
@@ -39,7 +39,7 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item (click)="goToAdd()">
+      <ion-item routerLink="/add" >
         <ion-icon slot="start" name="add"></ion-icon>
         <ion-label>Add offer</ion-label>
       </ion-item>

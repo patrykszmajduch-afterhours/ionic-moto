@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -13,7 +14,8 @@ const routes: Routes = [
   },
   {
     path: 'main',
-    loadChildren: () => import('./main/main.module').then(m => m.MainPageModule)
+    loadChildren: () => import('./main/main.module').then(m => m.MainPageModule),
+    canLoad:[AuthGuard]
   },
   // {
   //   path: 'offer',
@@ -21,7 +23,8 @@ const routes: Routes = [
   // },
   {
     path: 'add',
-    loadChildren: () => import('./offer/add/add.module').then(m => m.AddPageModule)
+    loadChildren: () => import('./offer/add/add.module').then(m => m.AddPageModule),
+    canLoad:[AuthGuard]
   },
   {
     path: 'auth',
@@ -29,11 +32,19 @@ const routes: Routes = [
   },
   {
     path: 'messages',
-    loadChildren: () => import('./user/messages/messages.module').then(m => m.MessagesPageModule)
+    loadChildren: () => import('./user/messages/messages.module').then(m => m.MessagesPageModule),
+    canLoad:[AuthGuard]
   },
   {
     path: 'favorites',
     loadChildren: () => import('./offer/favorites/favorites.module').then(m => m.FavoritesPageModule)
+    ,
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'info',
+    loadChildren: () => import('./user/info/info.module').then(m => m.InfoPageModule),
+    canLoad: [AuthGuard]
   }
 ];
 

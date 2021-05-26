@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { UserInfo } from '../auth/user-info';
+// import * as firebase from 'firebase/app';
 
 @Component({
   selector: 'app-menu',
@@ -9,7 +10,7 @@ import { UserInfo } from '../auth/user-info';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
-  public currentUser:UserInfo;
+  public currentUser: UserInfo = JSON.parse('{ "mail": "test@gmail.com", "userName": "test user name", "userId":"uuid losowe"}');
   public appPages = [//simple config for menu slider
     { title: 'Search', url: '/', icon: 'search'},
     // { title: 'Discover', url: '/folder/Favorites', icon: 'heart' },
@@ -17,7 +18,7 @@ export class MenuComponent implements OnInit {
     // { title: 'Messages', url: '/user/Trash', icon: 'mail' },
     { title: 'Logout', url: '/log', icon: 'log-out', isAuth : !this.auth.userIsAuthenticated },
     { title: 'Login', url: '/auth', icon: 'log-in', isAuth : !this.auth.userIsAuthenticated },
-    { title: 'Join!', url: '/auth', icon: 'log-in', isAuth : !this.auth.userIsAuthenticated },
+    // { title: 'Join!', url: '/auth', icon: 'log-in', isAuth : !this.auth.userIsAuthenticated },
   ];
   public userMenu =[
     { title: 'Favorites', url: '/offer/favorites', icon: 'heart' },
@@ -34,10 +35,10 @@ export class MenuComponent implements OnInit {
   ngOnInit() {//zmienic na observable
     // this.auth.getUserInfo.subscribe(obs=>{console.log("test");
   //   this.currentUser=obs;
-  // });
-  this.currentUser = this.auth.getUserInfo;
+  // this.auth.getUserInfo.then(el=>this.currentUser=el);
   }
-  goToAdd() {
-    this.router.navigate(['/main/tabs/discover/add']);
-  }
+  
+  // goToAdd() {
+  //   this.router.navigate(['/main/tabs/discover/add']);
+  // }
 }
