@@ -4,9 +4,9 @@
       <!-- moze zmienic na tooglebutton tam jest jakoś inaczej menuId -->
       <ion-menu-button></ion-menu-button> 
     </ion-buttons>
-    <ion-title>Discover offer! Brum Brum</ion-title>
+    <ion-title>Discover offer</ion-title>
 <!-- ustawic pojawienie od zalogowania -->
-    <ion-menu-button  *ngIf="true" slot="end" menu="main">
+    <ion-menu-button  *ngIf="showUser" slot="end" menu="main">
       <ion-icon name="person-circle-outline"></ion-icon>
     </ion-menu-button>
 
@@ -32,6 +32,7 @@
           </ion-card-header>
           <ion-img [src]="carsList[0].photo"></ion-img>
           <ion-card-content>
+            <p>{{ carsList[0].model}}</p>
             <p>{{ carsList[0].description}}</p>
           </ion-card-content>
           <div>
@@ -69,7 +70,7 @@
     <ion-row>
       <ion-col size="12" size-sm="8" offset-sm="2" text-center>
         <ion-list *ngIf="carsList!==undefined && carsList.length>0">
-          <ion-item *ngFor="let car of carsList.slice(1)" (click)="presentModal">
+          <ion-item *ngFor="let car of carsList.slice(1)" (click)="presentModal(car)">
             <ion-thumbnail slot="start">
               <ion-img [src]="car.photo[0]">
               </ion-img>
@@ -78,6 +79,9 @@
               <h2>
                 {{car.title}}
               </h2>
+              <p>
+                {{car.model}}
+              </p>
               <p>
                 {{car.price}}
               </p>

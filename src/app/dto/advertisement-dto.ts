@@ -9,7 +9,8 @@ export interface AdvertisementDTO {
     price:number;
     status: boolean;
     voivodeship: string;
-    vehicle: VehicleInformationDto;
+    brand:string;
+    model:string;
     userId: string;
     photo:Array<string>;
 }

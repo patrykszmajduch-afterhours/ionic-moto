@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import { map } from 'rxjs/operators';
+import { AuthService } from 'src/app/auth/auth.service';
 import { AdvertisementDTO } from 'src/app/dto/advertisement-dto';
 import { VehicleInformationDto } from 'src/app/dto/vehicle-information-dto';
 import { AdvertisementService } from 'src/app/services/advertisement.service';
@@ -13,10 +14,10 @@ import { DetailsComponent } from '../details/details.component';
   styleUrls: ['./discover.page.scss'],
 })
 export class DiscoverPage implements OnInit {
-
+  showUser: boolean = false;
   carsList: AdvertisementDTO[];
-  constructor(private carService: AdvertisementService, public modalController: ModalController) { }
-  modal:any;
+  constructor(private carService: AdvertisementService, public modalController: ModalController, private auth: AuthService) { }
+  modal: any;
   async presentModal(offerToShow) {
     this.modal = await this.modalController.create({
       component: DetailsComponent,
@@ -27,10 +28,9 @@ export class DiscoverPage implements OnInit {
 
     return await this.modal.present();
   }
-  
-  
 
   ngOnInit() {
+    this.auth.userIsAuthenticated.subscribe(val => this.showUser = val);
     // this.carService.getAll().subscribe((data: {}) => {
     //   this.carsList = data as Array<AdvertisementDTO>;
     //   console.log("its working!");

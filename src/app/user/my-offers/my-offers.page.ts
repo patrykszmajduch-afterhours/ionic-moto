@@ -15,8 +15,9 @@ export class MyOffersPage implements OnInit {
   constructor(private advService: AdvertisementService, private auth: AuthService) { }
 
   ngOnInit() {
-    this.offers=undefined;
+    // this.offers=undefined;
     this.auth.currentUser.subscribe(user => {
+      console.log(user);
       this.advService.getAll().snapshotChanges().pipe(
         map(changes =>
           changes.map(c =>
@@ -24,10 +25,13 @@ export class MyOffersPage implements OnInit {
           )
         )
       ).subscribe(data => {
-        this.offers = data.filter(el => el.userId === user.uid);
-        console.log(data)
+        var moment= data.filter(el => el.userId == user.uid);
+        this.offers=moment;
+        console.log(this.offers);
       });
     })
   }
-
+  deleteOffer(car){
+    this.advService.delete(car.key);
+  }
 }

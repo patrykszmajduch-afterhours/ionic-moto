@@ -26,6 +26,26 @@
                 <input type="number" name="price" [(ngModel)]="offer.price" required>
               </ion-item>
               <ion-item>
+                <ion-label>Brand</ion-label>
+                <input type="text" placeholder="Pick brand" aria-label="text" matInput [matAutocomplete]="brand"
+                  [(ngModel)]='offer.brand' name="brand">
+                <mat-autocomplete autoActiveFirstOption #brand="matAutocomplete">
+                  <mat-option *ngFor="let option of brandsList" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </ion-item>
+              <ion-item>
+                <ion-label>Model</ion-label>
+                <input type="text" placeholder="Pick model" aria-label="text" matInput [matAutocomplete]="model"
+                  [(ngModel)]='offer.model' name="model">
+                <mat-autocomplete autoActiveFirstOption #model="matAutocomplete">
+                  <mat-option *ngFor="let option of modelList" [value]="option">
+                    {{option}}
+                  </mat-option>
+                </mat-autocomplete>
+              </ion-item>
+              <ion-item>
                 <!-- todo dokonczyc na wyszukiwanie tego -->
                 <ion-label>Vehicle</ion-label>
                 <input type="text" name="vehicle">
@@ -35,7 +55,7 @@
                 <ion-label>Description</ion-label>
                 <textarea type="text" name="description" [(ngModel)]="offer.description"></textarea>
               </ion-item>
-              
+
               <ion-item>
                 <ion-button type="submit" [disabled]="!myForm.valid">Add offer</ion-button>
 

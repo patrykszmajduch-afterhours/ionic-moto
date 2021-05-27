@@ -1,16 +1,35 @@
-<!-- <ion-header>
+<ion-header>
   <ion-toolbar>
-    <ion-title>myOffers</ion-title>
+    <ion-buttons slot="start">
+      <!-- moze zmienic na tooglebutton tam jest jakoś inaczej menuId -->
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>My offers</ion-title>
+    <!-- ustawic pojawienie od zalogowania -->
+    <ion-menu-button slot="end" menu="main">
+      <ion-icon name="person-circle-outline"></ion-icon>
+    </ion-menu-button>
+
   </ion-toolbar>
-</ion-header> -->
+</ion-header>
 
 <ion-content>
   <ion-list>
-    <ion-list-header>
-      My offers
-    </ion-list-header>
     <ion-item *ngFor="let car of offers">
-        {{car.title}}
+      <ion-card size="12" size-sm="8" offset-sm="2" class="ion-text-center">
+        <ion-grid>
+          <ion-row>
+            <ion-col >
+              <ion-img style="width: 200px;" [src]="car.photo">
+              </ion-img>
+         </ion-col>
+            <ion-col style="width: 200px; word-wrap: break-word;"> {{car.title}}</ion-col>
+
+            <ion-col><button (click)="deleteOffer(car)">delete</button></ion-col>
+          </ion-row>
+        </ion-grid>
+
+      </ion-card>
     </ion-item>
   </ion-list>
 </ion-content>

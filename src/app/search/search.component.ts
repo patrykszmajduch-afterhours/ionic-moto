@@ -55,14 +55,14 @@ export class SearchComponent implements OnInit {
   searchFilter(element: AdvertisementDTO, cirteria: SearchCriteria): boolean {
     try{
     if (this.criteria.brand !== undefined && this.criteria.brand.length > 0) {
-      if (this.criteria.brand != element.vehicle.brand)
+      if (this.criteria.brand != element.brand)
         return false;
     }
     // if(this.criteria.category!==undefined && this.criteria.category.length >0){
     //   if(this.criteria.category!=element.ca
     // }
     if (this.criteria.model !== undefined && this.criteria.model.length > 0) {
-      if (this.criteria.model != element.vehicle.model)
+      if (this.criteria.model != element.model)
         return false;
     }
     if (this.criteria.price !== undefined) {

@@ -1,12 +1,24 @@
+<ion-button slot="end" (click)="close()">
+      close
+    </ion-button>
+<ion-content>
 <ion-grid>
+
   <ion-card>
-    <ion-title>{{offer.title}}</ion-title>
+    <ion-title>{{offer.title}}
+      <ion-button> add</ion-button>
+    </ion-title>
     <ion-list>
       <ion-item>{{offer.description}}</ion-item>
+      <!-- <ion-item>
+        <ion-label>Phone number: {{offer.number}}</ion-label>
+      </ion-item> -->
     </ion-list>
     <ion-img [src]="offer.photo"></ion-img>
     <ion-label>
       Price: {{offer.price | currency:"PLN":"symbol"}}
     </ion-label>
+    
   </ion-card>
 </ion-grid>
+</ion-content>

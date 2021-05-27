@@ -7,7 +7,7 @@
             <ion-col>
                 <mat-label>Brand</mat-label>
                 <input type="text" placeholder="Pick brand" aria-label="text" matInput [matAutocomplete]="brand"
-                    [(ngModel)]='criteria.brand' name="brand">
+                    (ngModel)='criteria.brand' name="brand">
                 <mat-autocomplete autoActiveFirstOption #brand="matAutocomplete">
                     <mat-option *ngFor="let option of brandsList" [value]="option">
                         {{option}}

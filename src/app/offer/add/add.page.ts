@@ -8,6 +8,8 @@ import { FileService, FileUpload } from 'src/app/services/file.service';
 import { AdvertisementDTO } from 'src/app/dto/advertisement-dto';
 import { AdvertisementService } from 'src/app/services/advertisement.service';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Router } from '@angular/router';
+import { SearchService } from 'src/app/services/search.service';
 
 @Component({
   selector: 'app-add',
@@ -22,9 +24,14 @@ export class AddPage implements OnInit {
   imgURL: any;
   offer: AdvertisementDTO = {} as AdvertisementDTO;
   userUid: string;
-  constructor(private uploadService: FileService, private advService: AdvertisementService, private auth: AuthService) { }
+  modelList:string[];
+  brandsList :string[];
+  
+  constructor(private uploadService: FileService, private advService: AdvertisementService, private auth: AuthService, private route:Router, private sService:SearchService) { }
 
   ngOnInit(): void {
+    this.brandsList = this.sService.GetBrands();
+    this.modelList = this.sService.GetModels();
     this.auth.currentUser.subscribe(el => {
       if (el != null)
         this.userUid = el.uid;
@@ -65,8 +72,10 @@ export class AddPage implements OnInit {
       console.log(currentFileUpload);
       this.offer.photo.push(currentFileUpload.url);
       numberOf++;
-      if (numberOf == this.selectedFiles.length)
+      if (numberOf == this.selectedFiles.length){
         this.advService.update(this.offer.key, this.offer);
+        this.route.navigateByUrl("/");
+      }
     });
   }
 }
