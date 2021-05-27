@@ -45,6 +45,10 @@ const routes: Routes = [
     path: 'info',
     loadChildren: () => import('./user/info/info.module').then(m => m.InfoPageModule),
     canLoad: [AuthGuard]
+  },
+  {
+    path: 'my-offers',
+    loadChildren: () => import('./user/my-offers/my-offers.module').then( m => m.MyOffersPageModule)
   }
 ];
 

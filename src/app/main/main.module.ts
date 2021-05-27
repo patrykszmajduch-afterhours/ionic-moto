@@ -7,14 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { MainPageRoutingModule } from './main-routing.module';
 
 import { MainPage } from './main.page';
+import { DetailsComponent } from '../offer/details/details.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MainPageRoutingModule
+    MainPageRoutingModule,
   ],
-  declarations: [MainPage]
+  declarations: [MainPage,
+    DetailsComponent
+  ]
 })
-export class MainPageModule {}
+export class MainPageModule { }

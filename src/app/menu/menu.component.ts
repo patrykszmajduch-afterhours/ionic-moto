@@ -23,7 +23,7 @@ export class MenuComponent implements OnInit {
   public userMenu =[
     { title: 'Favorites', url: '/offer/favorites', icon: 'heart' },
     { title: 'Messages', url: '/user/message', icon: 'mail' },
-    { title: 'My offers', url: '/offer/discover/user', icon: 'list' },
+    { title: 'My offers', url: '/my-offers', icon: 'list' },
     // { title: 'Logout', url: '/', icon: 'log-out', isAuth : !this.auth.userIsAuthenticated },
     // { title: 'Login', url: '/auth', icon: 'log-in', isAuth : !this.auth.userIsAuthenticated },
 
@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit {
   }
   logOut(){
     this.auth.logout();
-    this.router.navigate(['/']);
+    this.router.navigate(['/auth']);
   }
   // goToAdd() {
   //   this.router.navigate(['/main/tabs/discover/add']);

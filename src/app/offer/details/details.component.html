@@ -1,7 +1,12 @@
-
-      <ion-card>
-        <ion-title>{{offer.title}}</ion-title>
-        <ion-list>
-          <ion-item>{{offer.description}}</ion-item>
-        </ion-list>
-      </ion-card>
+<ion-grid>
+  <ion-card>
+    <ion-title>{{offer.title}}</ion-title>
+    <ion-list>
+      <ion-item>{{offer.description}}</ion-item>
+    </ion-list>
+    <ion-img [src]="offer.photo"></ion-img>
+    <ion-label>
+      Price: {{offer.price | currency:"PLN":"symbol"}}
+    </ion-label>
+  </ion-card>
+</ion-grid>

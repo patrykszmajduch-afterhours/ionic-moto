@@ -15,22 +15,27 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./add.page.scss'],
 })
 export class AddPage implements OnInit {
-  
+
   selectedFiles = new Array();
   imageToDisplay = new Array();
   percentage: number;
   imgURL: any;
   offer: AdvertisementDTO = {} as AdvertisementDTO;
-
-  constructor(private uploadService: FileService, private advService: AdvertisementService,private auth:AuthService) { }
+  userUid: string;
+  constructor(private uploadService: FileService, private advService: AdvertisementService, private auth: AuthService) { }
 
   ngOnInit(): void {
-    console.log("user id dodawanie",this.auth.user.uid);
+    this.auth.currentUser.subscribe(el => {
+      if (el != null)
+        this.userUid = el.uid;
+      console.log("user id dodawanie", this.userUid);
+    });
+
   }
 
   onSubmit(offer) {
     offer.key = "";
-    offer.userId = this.auth.user.id;
+    offer.userId = this.userUid;
     console.log(offer);
     var key = this.advService.create(offer);
     this.offer = offer;

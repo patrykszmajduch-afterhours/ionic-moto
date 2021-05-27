@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AdvertisementDTO } from '../dto/advertisement-dto';
-import { retry, catchError } from 'rxjs/operators';
+import { AdvertisementDTO, FavListDTO } from '../dto/advertisement-dto';
+import { retry, catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { Offer } from '../dto/view/offer-object';
 import { VehicleInformationDto } from '../dto/vehicle-information-dto';
@@ -12,11 +12,16 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 })
 export class AdvertisementService {
   private dbPath = '/offers';
+  private dbFavPath = '/favourite';
+
 
   advRef: AngularFireList<AdvertisementDTO> = null;
+  advFav: AngularFireList<FavListDTO> = null;
+
 
   constructor(private db: AngularFireDatabase) {
     this.advRef = db.list(this.dbPath);
+    this.advFav = db.list(this.dbFavPath);
   }
 
   getAll(): AngularFireList<AdvertisementDTO> {
@@ -39,6 +44,13 @@ export class AdvertisementService {
     return this.advRef.remove();
   }
 
+  getFavourites():AngularFireList<FavListDTO> {
+    return this.advFav;
+  }
+
+  updateFav(list:FavListDTO){
+    return this.advFav.update(list.uid,list);
+  }
 //   getAll():Observable<AdvertisementDTO[]>{
 //     return this.httpClient.get<AdvertisementDTO[]>('Advertisement/Collection').pipe(
 //       retry(1),

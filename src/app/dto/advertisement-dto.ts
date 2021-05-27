@@ -19,3 +19,8 @@ export interface FollowingAdvertisementDTO {
     userId: string;
     advertisementId: string;
 }
+
+export interface FavListDTO{
+    uid:string;
+    advertismentId?:string[];
+}

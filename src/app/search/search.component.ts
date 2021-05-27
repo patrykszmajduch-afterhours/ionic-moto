@@ -16,13 +16,15 @@ import { map } from 'rxjs/operators';
 })
 export class SearchComponent implements OnInit {
 
-  constructor(private advService: AdvertisementService, private sService: SearchService) { }
+  constructor(private advService: AdvertisementService, private sService: SearchService) {  }
   criteria: SearchCriteria = {} as SearchCriteria;
-  brandsList: string[];
+  brandsList = ["BWM", "SEAT", "VW", "AUDI", "SKODA"];
+  modelList = ['1', '2', '3', '4', '5','leon', 'ibiza'];
   @Output("offers") offers = new EventEmitter<AdvertisementDTO[]>();
 
   ngOnInit() {
     this.brandsList = this.sService.GetBrands();
+    this.modelList = this.sService.GetModels();
     this.advService.getAll().snapshotChanges().pipe(
       map(changes =>
         changes.map(c =>
@@ -36,21 +38,22 @@ export class SearchComponent implements OnInit {
     });
   }
 
-  // onSubmit(criteria) {
-  //   this.advService.getAll().snapshotChanges().pipe(
-  //     map(changes =>
-  //       changes.map(c =>
-  //         ({ key: c.payload.key, ...c.payload.val() })
-  //       )
-  //     )
-  //   ).subscribe(data => {
-  //     data.filter(el => this.searchFilter(el, criteria))
-  //     this.offers = data;
-  //     console.log(data)
-  //   });
-  // }
+  onSubmit(criteria) {
+    this.criteria=JSON.parse(JSON.stringify(criteria));
+    this.advService.getAll().snapshotChanges().pipe(
+      map(changes =>
+        changes.map(c =>
+          ({ key: c.payload.key, ...c.payload.val() })
+        )
+      )
+    ).subscribe(data => {
+      this.offers.emit( data.filter(el => this.searchFilter(el, this.criteria)));
+      console.log( data.filter(el => this.searchFilter(el, this.criteria)))
+    });
+  }
 
   searchFilter(element: AdvertisementDTO, cirteria: SearchCriteria): boolean {
+    try{
     if (this.criteria.brand !== undefined && this.criteria.brand.length > 0) {
       if (this.criteria.brand != element.vehicle.brand)
         return false;
@@ -67,13 +70,17 @@ export class SearchComponent implements OnInit {
         return false;
 
     }
+  }catch(e){
+    console.log("probably some fucking error");
+    return false;
+  }
     return true;
   }
 }
 export interface SearchCriteria {
-  brand: string;
-  model: string;
-  year: Date;
-  price: number;
-  category: string;
+  brand?: string;
+  model?: string;
+  year?: Date;
+  price?: number;
+  category?: string;
 }
